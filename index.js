@@ -1,41 +1,31 @@
-import { initialValueOfArrays } from "./initialValueOfArrays.js";
-import { setupProbability } from "./setupProbability.js";
-import { sumOfEveryEstimate } from "./sumOfEveryEstimate.js";
-import { functionOfDIRV } from "./functionOfDIRV.js";
-import { maxEstimate, minEstimate, diffEstimate } from "./estimates.js";
+import firstFunctionDIRV from "./exampleBuild/firstFunctionOfDIRV.js";
+import { estimates } from "./exampleBuild/estimates.js";
+import secondFunctionDIRV from "./exampleBuild/secondFunctionDIRV.js";
+import optimumDayFunction from "./exampleBuild/optimumDayFunction.js";
+import inductionFunction from "./exampleBuild/inductionFunction.js";
+// estimates array;
+const h = [];
+const S = [];
+let probsArray = [[], []];
+const filteredAllArrays = [];
+const AllEstimates = [];
+// ###################################### first function ###############################################
+filteredAllArrays.push(firstFunctionDIRV(estimates, probsArray, false, false));
 
-const p = [[], [], []]; //## array of probabilities for the  estimates
+// ###################################### second function ###############################################
 
-const h = []; //## sums of probabilities of each variants
+inductionFunction([1, 2], AllEstimates, filteredAllArrays, 0, estimates, true);
+// ###################################### third function ###############################################
 
-const S = []; //##Probability of each variants
+inductionFunction([2, 5], AllEstimates, filteredAllArrays, 1, estimates, false);
+// ###################################### fourth function ###############################################
 
-setupProbability(diffEstimate[0], p[0], 0);
+inductionFunction([3, 6], AllEstimates, filteredAllArrays, 2, estimates, false);
 
-setupProbability(diffEstimate[1], p[1], 1);
+// ###################################### fifth function ###############################################
 
-setupProbability(diffEstimate[2], p[2], 2);
+const theBestDay = optimumDayFunction(filteredAllArrays);
+console.log(filteredAllArrays);
+console.log(theBestDay); //#### The optimum work day
 
-const sumOfMaxEstimate = sumOfEveryEstimate(maxEstimate);
-
-const sumOfMinEstimate = sumOfEveryEstimate(minEstimate);
-
-initialValueOfArrays(sumOfMaxEstimate);
-
-const filteredArray = []; //## filtered array of discrete independent random variables
-
-const sumsOfDIRV = 0; //## sums of discrete independent random variables is always equal 1(one)
-
-const filteredDIRV = functionOfDIRV(
-  sumOfMaxEstimate,
-  sumOfMinEstimate,
-  diffEstimate,
-  p,
-  filteredArray,
-  sumsOfDIRV
-);
-console.log(
-  filteredDIRV,
-  "filtered array of discrete independent random variables"
-);
 export { S, h };
